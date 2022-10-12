@@ -5,17 +5,15 @@ public static class Ioc
     public static double Compute(char[] chars)
     {
         var n = chars.LongLength;
-        var charOccurrences = chars
+        var sumOfAllFrequencies = chars
             .Where(c => c != '\n')
             .GroupBy(c => c)
-            .Select(g => new
+            .Select(g =>
             {
-                Character = g.Key,
-                Ocurrences = g.LongCount()
-            });
-        var sumAllFrequencies = charOccurrences
-            .Select(gc => gc.Ocurrences * (gc.Ocurrences - 1))
+                var occurrences = g.LongCount();
+                return occurrences * (occurrences - 1);
+            })
             .Sum();
-        return (double)sumAllFrequencies / (n * (n - 1));
+        return (double)sumOfAllFrequencies / (n * (n - 1));
     }
 }
